@@ -22,7 +22,21 @@ const Dashboard = () => {
     { id: 'analysis', label: 'Cost Analysis', component: CostBenefitAnalysis },
   ];
 
-  const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component;
+  // const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component;
+//   <div className="relative">
+//   {tabs.map(tab => {
+//     const Component = tab.component;
+//     return (
+//       <div
+//         key={tab.id}
+//         className={activeTab === tab.id ? "block" : "hidden"} // toggle visibility
+//       >
+//         <Component setIsLoading={setIsLoading} />
+//       </div>
+//     );
+//   })}
+// </div>
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/15 flex flex-col">
@@ -56,13 +70,48 @@ const Dashboard = () => {
         </div>
 
         {/* Content Area */}
-        <div className="  bg-card/70 backdrop-blur-sm rounded-lg border border-border/50 p-6">
+        {/* <div className="  bg-card/70 backdrop-blur-sm rounded-lg border border-border/50 p-6">
           {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            ActiveComponent && <ActiveComponent setIsLoading={setIsLoading} />
-          )}
+  <LoadingSpinner />
+) : (
+  <div className="relative">
+    {tabs.map((tab) => {
+      const Component = tab.component;
+      return (
+        <div
+          key={tab.id}
+          className={activeTab === tab.id ? "block" : "hidden"} // show only active tab
+        >
+          <Component setIsLoading={setIsLoading} />
         </div>
+      );
+    })}
+  </div>
+)}
+
+        </div> */}
+        <div className="relative bg-card/70 backdrop-blur-sm rounded-lg border border-border/50 p-6">
+  {/* Tabs content (always mounted) */}
+  {tabs.map((tab) => {
+    const Component = tab.component;
+    return (
+      <div
+        key={tab.id}
+        className={activeTab === tab.id ? "block" : "hidden"}
+      >
+        <Component setIsLoading={setIsLoading} />
+      </div>
+    );
+  })}
+
+  {/* Overlay spinner */}
+  {isLoading && (
+    <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
+      <LoadingSpinner />
+    </div>
+  )}
+</div>
+
       </main>
 
       <Footer />

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { DollarSign, TrendingUp, Calculator, PieChart } from 'lucide-react';
-
 const CostBenefitAnalysis = ({ setIsLoading }) => {
   const [projectData, setProjectData] = useState({
     systemType: '',
@@ -11,6 +10,17 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
   });
 
   const [analysis, setAnalysis] = useState(null);
+//   const [analysis, setAnalysis] = useState({
+//   roi: 0,
+//   paybackPeriod: 0,
+//   netBenefit: 0,
+//   monthlyBenefit: 0,
+//   totalCost: 0,
+//   totalSavings: 0,
+//   breakeven: true,
+//   costBreakdown: { installation: 0, materials: 0, permits: 0 },
+//   savingsBreakdown: { waterBills: 0, maintenance: 0, environmental: 0 },
+// });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,11 +28,12 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
     
     // Simulate API call and calculations
     setTimeout(() => {
-      const initialCost = parseFloat(projectData.initialCost);
-      const annualMaintenance = parseFloat(projectData.maintenance);
-      const annualSavings = parseFloat(projectData.waterSavings);
-      const lifespan = parseInt(projectData.lifespan);
-      
+      const initialCost = Number(projectData.initialCost)||50000;
+      const annualMaintenance = Number(projectData.maintenance)||2000;
+      const annualSavings = Number(projectData.waterSavings)||3000;
+      const lifespan = Number(projectData.lifespan)||10;
+console.log({ initialCost, annualMaintenance, annualSavings, lifespan });
+
       const totalCost = initialCost + (annualMaintenance * lifespan);
       const totalSavings = annualSavings * lifespan;
       const netBenefit = totalSavings - totalCost;
@@ -50,8 +61,11 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
         }
       });
       setIsLoading(false);
+      console.log(analysis);
+      console.log(projectData);
     }, 2000);
-  };
+
+  }
 
   return (
     <div className="space-y-6">
@@ -88,7 +102,7 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
           <input
             type="number"
             value={projectData.initialCost}
-            onChange={(e) => setProjectData({ ...projectData, initialCost: e.target.value })}
+            onChange={(e) => setProjectData({ ...projectData, initialCost: Number(e.target.value) })}
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             placeholder="e.g., 50000"
             required
@@ -103,7 +117,7 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
           <input
             type="number"
             value={projectData.maintenance}
-            onChange={(e) => setProjectData({ ...projectData, maintenance: e.target.value })}
+            onChange={(e) => setProjectData({ ...projectData, maintenance: Number(e.target.value) })}
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             placeholder="e.g., 2000"
             required
@@ -118,7 +132,7 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
           <input
             type="number"
             value={projectData.waterSavings}
-            onChange={(e) => setProjectData({ ...projectData, waterSavings: e.target.value })}
+            onChange={(e) => setProjectData({ ...projectData, waterSavings: Number(e.target.value) })}
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             placeholder="e.g., 8000"
             required
@@ -131,7 +145,7 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
           </label>
           <select
             value={projectData.lifespan}
-            onChange={(e) => setProjectData({ ...projectData, lifespan: e.target.value })}
+            onChange={(e) => setProjectData({ ...projectData, lifespan: Number(e.target.value) })}
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
@@ -152,8 +166,9 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
           </button>
         </div>
       </form>
-
       {analysis && (
+
+      
         <div className="space-y-6">
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -183,7 +198,7 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
                 <span className="font-medium text-card-foreground">Net Benefit</span>
               </div>
               <div className={`text-2xl font-bold ${analysis.netBenefit > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                ₹{Math.abs(analysis.netBenefit).toLocaleString()}
+                ₹{Math.round(analysis.netBenefit).toLocaleString()}
               </div>
               <div className="text-sm text-card-foreground/70">
                 {analysis.netBenefit > 0 ? 'Profit' : 'Loss'}
@@ -255,8 +270,8 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
           {/* Recommendation */}
           <div className={`p-6 rounded-lg border ${
             analysis.breakeven 
-              ? 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800' 
-              : 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800'
+              ? 'bg-blue-100 border-green-200 dark:bg-green-900/20 dark:border-green-800 text-black' 
+              : 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800 text-black'
           }`}>
             <h3 className="text-xl font-bold text-card-foreground mb-3">
               {analysis.breakeven ? 'Recommended Investment' : 'Investment Warning'}
