@@ -37,7 +37,7 @@ const Dashboard = () => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="bg-card/70 backdrop-blur-sm rounded-lg border border-border/50 mb-6 p-2">
+        <div className=" bg-blue-100 text-blue-900 bg-card/70 backdrop-blur-sm rounded-lg border border-border/50 mb-6 p-2">
           <div className="flex flex-wrap gap-2">
             {tabs.map((tab) => (
               <button
@@ -56,7 +56,7 @@ const Dashboard = () => {
         </div>
 
         {/* Content Area */}
-        <div className="bg-card/70 backdrop-blur-sm rounded-lg border border-border/50 p-6">
+        <div className="  bg-card/70 backdrop-blur-sm rounded-lg border border-border/50 p-6">
           {isLoading ? (
             <LoadingSpinner />
           ) : (

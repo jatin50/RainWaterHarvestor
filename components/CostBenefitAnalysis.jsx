@@ -73,10 +73,10 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
-            <option value="">Select system type</option>
-            <option value="basic">Basic Collection System</option>
-            <option value="advanced">Advanced Filtration System</option>
-            <option value="commercial">Commercial Grade System</option>
+            <option className='text-black font-semibold' value="">Select system type</option>
+            <option className='text-black' value="basic">Basic Collection System</option>
+            <option className='text-black' value="advanced">Advanced Filtration System</option>
+            <option className='text-black' value="commercial">Commercial Grade System</option>
           </select>
         </div>
 
@@ -135,11 +135,11 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
-            <option value="">Select expected lifespan</option>
-            <option value="10">10 years</option>
-            <option value="15">15 years</option>
-            <option value="20">20 years</option>
-            <option value="25">25 years</option>
+            <option className='text-black text-xl' value="">Select expected lifespan</option>
+            <option className='text-black' value="10">10 years</option>
+            <option className='text-black' value="15">15 years</option>
+            <option className='text-black' value="20">20 years</option>
+            <option className='text-black' value="25">25 years</option>
           </select>
         </div>
 

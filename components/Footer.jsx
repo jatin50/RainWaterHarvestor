@@ -47,7 +47,7 @@ const Footer = () => {
 
         <div className="border-t border-border/30 mt-8 pt-6 text-center">
           <p className="text-card-foreground/60">
-            © 2024 AquaWise. Built for Smart India Hackathon. All rights reserved.
+            © 2025 AquaWise. Built for Smart India Hackathon. All rights reserved.
           </p>
         </div>
       </div>

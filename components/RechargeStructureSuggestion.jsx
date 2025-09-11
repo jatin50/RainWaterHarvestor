@@ -89,11 +89,11 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
-            <option value="">Select soil type</option>
-            <option value="clay">Clay</option>
-            <option value="sandy">Sandy</option>
-            <option value="loamy">Loamy</option>
-            <option value="rocky">Rocky</option>
+            <option className='text-black font-semibold' value="">Select soil type</option>
+            <option className='text-black' value="clay">Clay</option>
+            <option className='text-black' value="sandy">Sandy</option>
+            <option className='text-black' value="loamy">Loamy</option>
+            <option className='text-black' value="rocky">Rocky</option>
           </select>
         </div>
 
@@ -123,10 +123,10 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
-            <option value="">Select budget range</option>
-            <option value="low">₹10,000 - ₹25,000</option>
-            <option value="medium">₹25,000 - ₹50,000</option>
-            <option value="high">₹50,000+</option>
+            <option className='text-black font-semibold' value="">Select budget range</option>
+            <option className='text-black' value="low">₹10,000 - ₹25,000</option>
+            <option className='text-black' value="medium">₹25,000 - ₹50,000</option>
+            <option className='text-black' value="high">₹50,000+</option>
           </select>
         </div>
 
