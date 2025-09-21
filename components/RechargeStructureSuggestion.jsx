@@ -10,11 +10,11 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
   });
 
   const [suggestions, setSuggestions] = useState(null);
+  const [output, setOutput] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
     // Simulate API call
     setTimeout(() => {
       const structures = [
@@ -43,10 +43,33 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
           description: 'Gravel-filled pit for gradual water infiltration'
         }
       ];
+      if (inputData.roofArea > 1000 && inputData.budget == 'high') {
+          setOutput(structures[0]);
+       }
+       else if (inputData.roofArea > 1000 && inputData.budget == 'low') {
+       setOutput(structures[1]);
+       }
+       else if (inputData.roofArea < 1000 && inputData.budget == 'medium') {
+       setOutput(structures[2]);
+       }
+       else if (inputData.roofArea > 500 && inputData.budget == 'low') {
+       setOutput(structures[1]);
+       }
+       else if (inputData.roofArea > 500 && inputData.budget == 'medium') {
+       setOutput(structures[2]);
+       }
+       else if (inputData.roofArea > 500 && inputData.budget == 'high') {
+       setOutput(structures[0]);
+       }
+       else{
+          setOutput("please select valid option");
+       }
+       console.log(output);
+       console.log(inputData);
       
       setSuggestions({
         structures,
-        recommended: structures[0],
+        recommended: output,
         totalCapacity: structures.reduce((sum, s) => sum + parseInt(s.capacity), 0),
         implementationTime: '2-3 weeks'
       });
@@ -203,7 +226,6 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
               ))}
             </div>
           </div>
-
           {/* Construction Guidelines */}
           <div className="p-6 bg-card/30 border border-border/30 rounded-lg">
             <h3 className="text-lg font-semibold text-card-foreground mb-3">Construction Guidelines</h3>

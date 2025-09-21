@@ -20,8 +20,8 @@ const Home = () => {
           <div className="flex justify-center">
             <Droplets className="w-20 h-20 text-primary animate-bounce" />
           </div>
-          <h1 className="text-4xl font-bold text-primary">RainWater Harvesting</h1>
-          <p className="text-lg text-muted-foreground">Feasibility Assessment System</p>
+          <h1 className="text-4xl font-bold text-primary">AquaWise</h1>
+          <p className="text-lg text-muted-foreground"> Rainwater Feasibility Assessment System</p>
         </div>
       ) : (
         <div className="max-w-4xl mx-auto text-center space-y-8 p-8 animate-fade-in">
