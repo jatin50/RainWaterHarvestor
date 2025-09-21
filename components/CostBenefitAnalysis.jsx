@@ -1,272 +1,139 @@
 import { useState } from 'react';
-import { DollarSign, TrendingUp, Calculator, PieChart } from 'lucide-react';
+import { MapPin, Layers, Droplets, TrendingUp } from 'lucide-react';
 
-const CostBenefitAnalysis = ({ setIsLoading }) => {
-  const [projectData, setProjectData] = useState({
-    systemType: '',
-    initialCost: '',
-    maintenance: '',
-    waterSavings: '',
-    lifespan: ''
-  });
+const AquiferInfo = ({ setIsLoading }) => {
+  const [location, setLocation] = useState('');
+  const [aquiferData, setAquiferData] = useState(null);
 
-  const [analysis, setAnalysis] = useState(null);
-
-  const handleSubmit = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
+    if (!location) return;
+    
     setIsLoading(true);
     
-    // Simulate API call and calculations
+    // Simulate API call
     setTimeout(() => {
-      const initialCost = parseFloat(projectData.initialCost);
-      const annualMaintenance = parseFloat(projectData.maintenance);
-      const annualSavings = parseFloat(projectData.waterSavings);
-      const lifespan = parseInt(projectData.lifespan);
-      
-      const totalCost = initialCost + (annualMaintenance * lifespan);
-      const totalSavings = annualSavings * lifespan;
-      const netBenefit = totalSavings - totalCost;
-      const roi = ((netBenefit / totalCost) * 100);
-      const paybackPeriod = initialCost / annualSavings;
-      
-      setAnalysis({
-        initialCost,
-        totalCost,
-        totalSavings,
-        netBenefit,
-        roi,
-        paybackPeriod: Math.round(paybackPeriod * 10) / 10,
-        breakeven: paybackPeriod <= lifespan,
-        monthlyBenefit: netBenefit / (lifespan * 12),
-        costBreakdown: {
-          installation: initialCost * 0.7,
-          materials: initialCost * 0.2,
-          permits: initialCost * 0.1
-        },
-        savingsBreakdown: {
-          waterBills: annualSavings * 0.6,
-          maintenance: annualSavings * 0.2,
-          environmental: annualSavings * 0.2
-        }
+      setAquiferData({
+        aquiferName: `${location} Regional Aquifer`,
+        depth: Math.floor(Math.random() * 50) + 20,
+        waterLevel: Math.floor(Math.random() * 30) + 10,
+        quality: ['Good', 'Fair', 'Excellent'][Math.floor(Math.random() * 3)],
+        rechargeRate: Math.floor(Math.random() * 20) + 5,
+        geology: 'Alluvial deposits with sandstone layers',
+        salinity: Math.floor(Math.random() * 1000) + 200,
+        yield: Math.floor(Math.random() * 15) + 5
       });
       setIsLoading(false);
-    }, 2000);
+    }, 1500);
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-card-foreground mb-2">Cost-Benefit Analysis</h2>
+        <h2 className="text-2xl font-bold text-card-foreground mb-2">Local Aquifer Information</h2>
         <p className="text-card-foreground/70">
-          Comprehensive financial analysis of your rainwater harvesting investment
+          Get detailed information about local groundwater aquifers
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
+      <form onSubmit={handleSearch} className="flex gap-4">
+        <div className="flex-1">
           <label className="block text-card-foreground font-medium mb-2">
-            System Type
-          </label>
-          <select
-            value={projectData.systemType}
-            onChange={(e) => setProjectData({ ...projectData, systemType: e.target.value })}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
-            required
-          >
-            <option value="">Select system type</option>
-            <option value="basic">Basic Collection System</option>
-            <option value="advanced">Advanced Filtration System</option>
-            <option value="commercial">Commercial Grade System</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-card-foreground font-medium mb-2">
-            <DollarSign className="inline w-4 h-4 mr-2" />
-            Initial Investment (₹)
+            <MapPin className="inline w-4 h-4 mr-2" />
+            Location
           </label>
           <input
-            type="number"
-            value={projectData.initialCost}
-            onChange={(e) => setProjectData({ ...projectData, initialCost: e.target.value })}
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
-            placeholder="e.g., 50000"
+            placeholder="Enter city or area name"
             required
           />
         </div>
-
-        <div>
-          <label className="block text-card-foreground font-medium mb-2">
-            <Calculator className="inline w-4 h-4 mr-2" />
-            Annual Maintenance (₹)
-          </label>
-          <input
-            type="number"
-            value={projectData.maintenance}
-            onChange={(e) => setProjectData({ ...projectData, maintenance: e.target.value })}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
-            placeholder="e.g., 2000"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-card-foreground font-medium mb-2">
-            <TrendingUp className="inline w-4 h-4 mr-2" />
-            Annual Water Savings (₹)
-          </label>
-          <input
-            type="number"
-            value={projectData.waterSavings}
-            onChange={(e) => setProjectData({ ...projectData, waterSavings: e.target.value })}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
-            placeholder="e.g., 8000"
-            required
-          />
-        </div>
-
-        <div className="md:col-span-2">
-          <label className="block text-card-foreground font-medium mb-2">
-            System Lifespan (years)
-          </label>
-          <select
-            value={projectData.lifespan}
-            onChange={(e) => setProjectData({ ...projectData, lifespan: e.target.value })}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
-            required
-          >
-            <option value="">Select expected lifespan</option>
-            <option value="10">10 years</option>
-            <option value="15">15 years</option>
-            <option value="20">20 years</option>
-            <option value="25">25 years</option>
-          </select>
-        </div>
-
-        <div className="md:col-span-2">
+        <div className="flex items-end">
           <button
             type="submit"
-            className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+            className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
           >
-            Calculate Cost-Benefit Analysis
+            Search
           </button>
         </div>
       </form>
 
-      {analysis && (
+      {aquiferData && (
         <div className="space-y-6">
-          {/* Key Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-card/50 p-4 rounded-lg border border-border/30">
-              <div className="flex items-center gap-2 mb-2">
-                <DollarSign className="w-5 h-5 text-primary" />
-                <span className="font-medium text-card-foreground">ROI</span>
-              </div>
-              <div className={`text-2xl font-bold ${analysis.roi > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {analysis.roi > 0 ? '+' : ''}{Math.round(analysis.roi)}%
-              </div>
-              <div className="text-sm text-card-foreground/70">Return on Investment</div>
-            </div>
-
-            <div className="bg-card/50 p-4 rounded-lg border border-border/30">
-              <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="w-5 h-5 text-accent" />
-                <span className="font-medium text-card-foreground">Payback</span>
-              </div>
-              <div className="text-2xl font-bold text-card-foreground">{analysis.paybackPeriod}</div>
-              <div className="text-sm text-card-foreground/70">Years</div>
-            </div>
-
-            <div className="bg-card/50 p-4 rounded-lg border border-border/30">
-              <div className="flex items-center gap-2 mb-2">
-                <Calculator className="w-5 h-5 text-green-600" />
-                <span className="font-medium text-card-foreground">Net Benefit</span>
-              </div>
-              <div className={`text-2xl font-bold ${analysis.netBenefit > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                ₹{Math.abs(analysis.netBenefit).toLocaleString()}
-              </div>
-              <div className="text-sm text-card-foreground/70">
-                {analysis.netBenefit > 0 ? 'Profit' : 'Loss'}
-              </div>
-            </div>
-
-            <div className="bg-card/50 p-4 rounded-lg border border-border/30">
-              <div className="flex items-center gap-2 mb-2">
-                <PieChart className="w-5 h-5 text-blue-600" />
-                <span className="font-medium text-card-foreground">Monthly Benefit</span>
-              </div>
-              <div className={`text-2xl font-bold ${analysis.monthlyBenefit > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                ₹{Math.abs(Math.round(analysis.monthlyBenefit)).toLocaleString()}
-              </div>
-              <div className="text-sm text-card-foreground/70">Per month</div>
-            </div>
-          </div>
-
-          {/* Financial Summary */}
           <div className="p-6 bg-accent/10 border border-accent/30 rounded-lg">
-            <h3 className="text-xl font-bold text-card-foreground mb-4">Financial Summary</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold text-card-foreground mb-3">Investment Breakdown</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-card-foreground/70">Installation:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.costBreakdown.installation).toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-card-foreground/70">Materials:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.costBreakdown.materials).toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-card-foreground/70">Permits & Others:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.costBreakdown.permits).toLocaleString()}</span>
-                  </div>
-                  <div className="border-t border-border/30 pt-2 flex justify-between font-semibold">
-                    <span className="text-card-foreground">Total Cost:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.totalCost).toLocaleString()}</span>
-                  </div>
+            <h3 className="text-xl font-bold text-card-foreground mb-4">
+              {aquiferData.aquiferName}
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-card/50 p-4 rounded-lg border border-border/30">
+                <div className="flex items-center gap-2 mb-2">
+                  <Layers className="w-5 h-5 text-primary" />
+                  <span className="font-medium text-card-foreground">Depth</span>
                 </div>
+                <div className="text-2xl font-bold text-card-foreground">{aquiferData.depth}m</div>
+                <div className="text-sm text-card-foreground/70">Average depth</div>
               </div>
 
-              <div>
-                <h4 className="font-semibold text-card-foreground mb-3">Savings Breakdown</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-card-foreground/70">Water Bills:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.savingsBreakdown.waterBills * parseInt(projectData.lifespan)).toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-card-foreground/70">Maintenance Savings:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.savingsBreakdown.maintenance * parseInt(projectData.lifespan)).toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-card-foreground/70">Environmental Value:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.savingsBreakdown.environmental * parseInt(projectData.lifespan)).toLocaleString()}</span>
-                  </div>
-                  <div className="border-t border-border/30 pt-2 flex justify-between font-semibold">
-                    <span className="text-card-foreground">Total Savings:</span>
-                    <span className="text-card-foreground">₹{Math.round(analysis.totalSavings).toLocaleString()}</span>
-                  </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-border/30">
+                <div className="flex items-center gap-2 mb-2">
+                  <Droplets className="w-5 h-5 text-accent" />
+                  <span className="font-medium text-card-foreground">Water Level</span>
                 </div>
+                <div className="text-2xl font-bold text-card-foreground">{aquiferData.waterLevel}m</div>
+                <div className="text-sm text-card-foreground/70">Below ground</div>
+              </div>
+
+              <div className="bg-card/50 p-4 rounded-lg border border-border/30">
+                <div className="flex items-center gap-2 mb-2">
+                  <TrendingUp className="w-5 h-5 text-green-600" />
+                  <span className="font-medium text-card-foreground">Recharge Rate</span>
+                </div>
+                <div className="text-2xl font-bold text-card-foreground">{aquiferData.rechargeRate}%</div>
+                <div className="text-sm text-card-foreground/70">Annual rate</div>
+              </div>
+
+              <div className="bg-card/50 p-4 rounded-lg border border-border/30">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-medium text-card-foreground">Quality</span>
+                </div>
+                <div className="text-2xl font-bold text-card-foreground">{aquiferData.quality}</div>
+                <div className="text-sm text-card-foreground/70">Overall rating</div>
               </div>
             </div>
           </div>
 
-          {/* Recommendation */}
-          <div className={`p-6 rounded-lg border ${
-            analysis.breakeven 
-              ? 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800' 
-              : 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800'
-          }`}>
-            <h3 className="text-xl font-bold text-card-foreground mb-3">
-              {analysis.breakeven ? 'Recommended Investment' : 'Investment Warning'}
-            </h3>
-            <p className="text-card-foreground/80">
-              {analysis.breakeven 
-                ? `This rainwater harvesting system is financially viable with a payback period of ${analysis.paybackPeriod} years and a positive ROI of ${Math.round(analysis.roi)}%. You'll start seeing net benefits after the payback period.`
-                : `This investment may not be financially optimal as the payback period (${analysis.paybackPeriod} years) exceeds the system lifespan. Consider reducing costs or increasing efficiency.`
-              }
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 bg-card/30 border border-border/30 rounded-lg">
+              <h4 className="text-lg font-semibold text-card-foreground mb-3">Geological Properties</h4>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-card-foreground/70">Formation:</span>
+                  <span className="text-card-foreground">{aquiferData.geology}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-card-foreground/70">Salinity:</span>
+                  <span className="text-card-foreground">{aquiferData.salinity} mg/L</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-card-foreground/70">Yield:</span>
+                  <span className="text-card-foreground">{aquiferData.yield} L/s</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 bg-card/30 border border-border/30 rounded-lg">
+              <h4 className="text-lg font-semibold text-card-foreground mb-3">Recharge Recommendations</h4>
+              <ul className="space-y-2 text-card-foreground/70">
+                <li>• Install recharge wells in high permeability zones</li>
+                <li>• Use check dams for surface water retention</li>
+                <li>• Implement rainwater harvesting systems</li>
+                <li>• Regular monitoring of water levels recommended</li>
+              </ul>
+            </div>
           </div>
         </div>
       )}
@@ -274,4 +141,4 @@ const CostBenefitAnalysis = ({ setIsLoading }) => {
   );
 };
 
-export default CostBenefitAnalysis;
+export default AquiferInfo;
