@@ -10,11 +10,11 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
   });
 
   const [suggestions, setSuggestions] = useState(null);
+  const [output, setOutput] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
     // Simulate API call
     setTimeout(() => {
       const structures = [
@@ -43,10 +43,33 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
           description: 'Gravel-filled pit for gradual water infiltration'
         }
       ];
+      if (inputData.roofArea > 1000 && inputData.budget == 'high') {
+          setOutput(structures[0]);
+       }
+       else if (inputData.roofArea > 1000 && inputData.budget == 'low') {
+       setOutput(structures[1]);
+       }
+       else if (inputData.roofArea < 1000 && inputData.budget == 'medium') {
+       setOutput(structures[2]);
+       }
+       else if (inputData.roofArea > 500 && inputData.budget == 'low') {
+       setOutput(structures[1]);
+       }
+       else if (inputData.roofArea > 500 && inputData.budget == 'medium') {
+       setOutput(structures[2]);
+       }
+       else if (inputData.roofArea > 500 && inputData.budget == 'high') {
+       setOutput(structures[0]);
+       }
+       else{
+          setOutput("please select valid options");
+       }
+       console.log(output);
+       console.log(inputData);
       
       setSuggestions({
         structures,
-        recommended: structures[0],
+        recommended: output,
         totalCapacity: structures.reduce((sum, s) => sum + parseInt(s.capacity), 0),
         implementationTime: '2-3 weeks'
       });
@@ -89,11 +112,11 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
-            <option value="">Select soil type</option>
-            <option value="clay">Clay</option>
-            <option value="sandy">Sandy</option>
-            <option value="loamy">Loamy</option>
-            <option value="rocky">Rocky</option>
+            <option className='text-black font-semibold' value="">Select soil type</option>
+            <option className='text-black' value="clay">Clay</option>
+            <option className='text-black' value="sandy">Sandy</option>
+            <option className='text-black' value="loamy">Loamy</option>
+            <option className='text-black' value="rocky">Rocky</option>
           </select>
         </div>
 
@@ -123,10 +146,10 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
-            <option value="">Select budget range</option>
-            <option value="low">₹10,000 - ₹25,000</option>
-            <option value="medium">₹25,000 - ₹50,000</option>
-            <option value="high">₹50,000+</option>
+            <option className='text-black font-semibold' value="">Select budget range</option>
+            <option className='text-black' value="low">₹10,000 - ₹25,000</option>
+            <option className='text-black' value="medium">₹25,000 - ₹50,000</option>
+            <option className='text-black' value="high">₹50,000+</option>
           </select>
         </div>
 
@@ -203,7 +226,6 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
               ))}
             </div>
           </div>
-
           {/* Construction Guidelines */}
           <div className="p-6 bg-card/30 border border-border/30 rounded-lg">
             <h3 className="text-lg font-semibold text-card-foreground mb-3">Construction Guidelines</h3>
