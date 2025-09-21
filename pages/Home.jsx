@@ -20,8 +20,8 @@ const Home = () => {
           <div className="flex justify-center">
             <Droplets className="w-20 h-20 text-primary animate-bounce" />
           </div>
-          <h1 className="text-4xl font-bold text-primary">RainWater Harvesting</h1>
-          <p className="text-lg text-muted-foreground">Feasibility Assessment System</p>
+          <h1 className="text-4xl font-bold text-primary">AquaWise</h1>
+          <p className="text-lg text-muted-foreground"> Rainwater Feasibility Assessment System</p>
         </div>
       ) : (
         <div className="max-w-4xl mx-auto text-center space-y-8 p-8 animate-fade-in">
@@ -29,12 +29,12 @@ const Home = () => {
             <h1 className="text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               AquaWise
             </h1>
-            <p className="text-2xl text-foreground/80">
+            <p className="text-3xl text-white font-semibold">
               Smart Rainwater Harvesting & RTRWH Solutions
             </p>
           </div>
           
-          <div className="bg-card/50 backdrop-blur-sm rounded-lg p-8 border border-border/50">
+          <div className="  bg-card/50 backdrop-blur-sm rounded-lg p-8 border border-border/50">
             <p className="text-lg text-card-foreground/80 mb-6">
               Discover the feasibility of rainwater harvesting for your location with our 
               AI-powered assessment system. Get personalized recommendations for RTRWH 
@@ -44,13 +44,13 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={() => navigate('/login')}
-                className="px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                className="px-8 py-3 outline-1 rounded-lg hover:bg-sky-300 transition-colors flex items-center justify-center gap-2"
               >
-                Get Started <ChevronRight className="w-5 h-5" />
+                Get Started <ChevronRight className="w-5 h-5 " />
               </button>
               <button 
                 onClick={() => navigate('/about')}
-                className="px-8 py-3 border border-border bg-card text-card-foreground rounded-lg hover:bg-accent/10 transition-colors"
+                className="px-8 py-3 border border-border bg-card text-card-foreground rounded-lg hover:bg-sky-300 transition-colors"
               >
                 Learn More
               </button>
