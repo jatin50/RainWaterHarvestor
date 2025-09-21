@@ -101,11 +101,11 @@ const ToxicityPrediction = ({ setIsLoading }) => {
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring text-foreground"
             required
           >
-            <option value="">Select collection area</option>
-            <option value="roof">Roof Catchment</option>
-            <option value="ground">Ground Catchment</option>
-            <option value="industrial">Industrial Area</option>
-            <option value="residential">Residential Area</option>
+            <option className='text-black font-semibold' value="">Select collection area</option>
+            <option className='text-black' value="roof">Roof Catchment</option>
+            <option className='text-black' value="ground">Ground Catchment</option>
+            <option className='text-black' value="industrial">Industrial Area</option>
+            <option className='text-black' value="residential">Residential Area</option>
           </select>
         </div>
 
