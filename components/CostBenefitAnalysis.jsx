@@ -141,4 +141,4 @@ const AquiferInfo = ({ setIsLoading }) => {
   );
 };
 
-export default AquiferInfo;
+export default CostBenefitAnalysis;

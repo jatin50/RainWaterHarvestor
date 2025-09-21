@@ -43,29 +43,6 @@ const RechargeStructureSuggestion = ({ setIsLoading }) => {
           description: 'Gravel-filled pit for gradual water infiltration'
         }
       ];
-      if (inputData.roofArea > 1000 && inputData.budget == 'high') {
-          setOutput(structures[0]);
-       }
-       else if (inputData.roofArea > 1000 && inputData.budget == 'low') {
-       setOutput(structures[1]);
-       }
-       else if (inputData.roofArea < 1000 && inputData.budget == 'medium') {
-       setOutput(structures[2]);
-       }
-       else if (inputData.roofArea > 500 && inputData.budget == 'low') {
-       setOutput(structures[1]);
-       }
-       else if (inputData.roofArea > 500 && inputData.budget == 'medium') {
-       setOutput(structures[2]);
-       }
-       else if (inputData.roofArea > 500 && inputData.budget == 'high') {
-       setOutput(structures[0]);
-       }
-       else{
-          setOutput("please select valid option");
-       }
-       console.log(output);
-       console.log(inputData);
       
       setSuggestions({
         structures,
